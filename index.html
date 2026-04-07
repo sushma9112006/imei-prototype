@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>IMEI Verification</title>
+</head>
+<body>
+
+<h2>Register Device</h2>
+<input id="imei" placeholder="IMEI"><br>
+<input id="model" placeholder="Model"><br>
+<input id="manufacturer" placeholder="Manufacturer"><br>
+<input id="os" placeholder="OS Type"><br>
+<button onclick="register()">Register</button>
+
+<h2>Verify Device</h2>
+<button onclick="verify()">Verify</button>
+
+<h2>Flag Device</h2>
+<button onclick="flag()">Flag as Stolen</button>
+
+<p id="result"></p>
+
+<script>
+const base = "http://localhost:3000/api";
+
+async function register() {
+  const res = await fetch(base + "/register", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({
+      imei: imei.value,
+      model: model.value,
+      manufacturer: manufacturer.value,
+      os_type: os.value
+    })
+  });
+  const data = await res.json();
+  result.innerText = JSON.stringify(data);
+}
+
+async function verify() {
+  const res = await fetch(base + "/verify", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({
+      imei: imei.value,
+      model: model.value,
+      manufacturer: manufacturer.value,
+      os_type: os.value
+    })
+  });
+  const data = await res.json();
+  result.innerText = JSON.stringify(data);
+}
+
+async function flag() {
+  const res = await fetch(base + "/flag", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({
+      imei: imei.value
+    })
+  });
+  const data = await res.json();
+  result.innerText = JSON.stringify(data);
+}
+</script>
+
+</body>
+</html>
